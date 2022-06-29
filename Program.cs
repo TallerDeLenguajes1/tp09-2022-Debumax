@@ -48,12 +48,13 @@ void leerArchivoJson(){
             openArchivoJson.Close();
         }
     }
-    List<Productos> listaDelJson= JsonSerializer.Deserialize<List<Productos>>(archivoJson); // lo convierto en la lista de productos
+    List<Productos> listaDelJson = JsonSerializer.Deserialize<List<Productos>>(archivoJson); // lo convierto en la lista de productos
+    
     Console.WriteLine("\n aqui listando lo de la lista (?)");
     foreach (Productos item in listaDelJson)
     {
         item.MostrarProducto();
-    }
+    }        
 
 }
 

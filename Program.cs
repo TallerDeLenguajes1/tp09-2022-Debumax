@@ -10,9 +10,9 @@ Console.WriteLine("Hello, World!");
 //Productos pr=new Productos();
 //pr.MostrarProducto();
 
-List<Productos> listaProductos ;
+List<Productos> listaProductos =new List<Productos>();
 
-listaProductos=GeneraLista();
+listaProductos=GeneraLista(listaProductos );
 muestraProductos();
 
 guardaProductosJson(listaProductos);
@@ -49,6 +49,12 @@ void leerArchivoJson(){
         }
     }
     List<Productos> listaDelJson= JsonSerializer.Deserialize<List<Productos>>(archivoJson); // lo convierto en la lista de productos
+    Console.WriteLine("\n aqui listando lo de la lista (?)");
+    foreach (Productos item in listaDelJson)
+    {
+        item.MostrarProducto();
+    }
+
 }
 
 
@@ -65,8 +71,8 @@ void muestraProductos(){
 }
 }
 
-List<Productos> GeneraLista(){
-    List<Productos> ListaProductos = new List<Productos>();
+List<Productos> GeneraLista(List<Productos>  ListaProductos){
+    
     Random rand = new Random();
     int nproductos=rand.Next(1,10);
 

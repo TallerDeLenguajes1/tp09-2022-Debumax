@@ -1,21 +1,83 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using System.IO;
+using System.Text.Json;
+
 Console.WriteLine("Hello, World!");
 
-indexador();
+//indexador();
+
+
+//Productos pr=new Productos();
+//pr.MostrarProducto();
+
+List<Productos> listaProductos ;
+
+listaProductos=GeneraLista();
+muestraProductos();
+
+guardaProductosJson(listaProductos);
+leerArchivoJson();
 
 
 
 
 
 
+string CreaStringJson(List<Productos> listado){
+    string textJson = JsonSerializer.Serialize(listado);// pasamos a json
+    return textJson;    
+}
+void guardaProductosJson(List<Productos> listado){
+
+    string ProdJson= CreaStringJson(listado);
+    FileStream mijson= new FileStream("Productos.json",FileMode.Create);
+    using (StreamWriter sw = new StreamWriter(mijson))
+    {
+        sw.WriteLine(ProdJson);//escribo la lista en el archivo
+        sw.Close();
+    }
+}
+void leerArchivoJson(){
+    string archivoJson;
+
+    using ( FileStream openArchivoJson= new FileStream("Productos.json",FileMode.Open)) // abro el archivo 
+    {
+        using (StreamReader sreader= new StreamReader(openArchivoJson))// lo convierto en algo
+        {
+            archivoJson= sreader.ReadToEnd(); // lo copio en el archivo ya 
+            openArchivoJson.Close();
+        }
+    }
+    List<Productos> listaDelJson= JsonSerializer.Deserialize<List<Productos>>(archivoJson); // lo convierto en la lista de productos
+}
 
 
 
 
+void muestraProductos(){
+    int i=1;
+    foreach (Productos pro in listaProductos)
+{
+    Console.WriteLine($"producto n° {i}");
+    Console.WriteLine("");
+    pro.MostrarProducto();
+    i++;
+}
+}
 
+List<Productos> GeneraLista(){
+    List<Productos> ListaProductos = new List<Productos>();
+    Random rand = new Random();
+    int nproductos=rand.Next(1,10);
 
-
-
+    for (int i = 0; i < nproductos; i++)
+    {
+        Productos pr=new Productos(i);
+        ListaProductos.Add(pr);
+    }
+    
+    return ListaProductos;
+}
 
 
 
